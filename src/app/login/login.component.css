@@ -1,0 +1,59 @@
+.btn-submit{
+  background-color: #7C4DFF;
+  border: none;
+  border-radius: 10px;
+  color: white;
+}
+
+
+.login-section{
+  margin-top: 7rem;
+}
+
+.login-image-con{
+  display: flex;
+  flex-direction: row;
+}
+
+.cursor-pointer{
+  cursor: pointer;
+}
+
+.login-image{
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  cursor: pointer;
+
+}
+
+.login-image:hover{
+  transform: scale(1.01);
+}
+
+input:focus{
+  box-shadow: none;
+}
+
+input:focus::placeholder{
+   color: white;
+}
+
+p span{
+  color: #7C4DFF;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
+@media (max-width: 576px) {
+  .login-column{
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 0px) and (max-width: 991px) {
+  .none-mobile, .none{
+    display: none;
+  }
+
+}

@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+@import url(https://db.onlinewebfonts.com/c/5b2384cf9c701d542008dfe9c848d9d6?family=Qanelas-Regular);
+
+
+*{
+  font-family: 'Qanelas-Regular' , serif;
+}
+
+.display{
+  transform: scale(0);
+}
+
+.display-show{
+  transform: scale(1);
+}
+
+.theme-color{
+  color: #7C4DFF;
+}

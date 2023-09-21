@@ -1,0 +1,94 @@
+/* header start here */
+
+header{
+  margin-top: 7rem;
+}
+
+.btn-header{
+  background-color: #7C4DFF;
+  border-radius: 20px;
+  color: white;
+  border: none;
+  padding: .4rem 1rem;
+  cursor: pointer;
+}
+
+.color{
+  color: #535050;
+}
+
+.header-flex{
+  display: flex;
+  flex-direction: row;
+}
+
+.video-con{
+  margin-left: 10rem;
+}
+
+/* header ends here */
+
+
+
+/* main start here */
+.bg-main{
+  margin-top: 8rem;
+}
+
+.main{
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+
+.sub-main{
+  display: flex;
+  flex-direction: row;
+  margin-top: 2rem;
+}
+
+.custom-shadow{
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.bg-main{
+  background-color: #ffffff;
+}
+
+/* main ends here */
+
+
+
+
+
+/* header start here */
+
+
+@media (max-width: 576px) {
+  .video-con{
+    margin-top: 0rem;
+    margin-left: -4rem;
+  }
+  .main{
+    flex-direction: column;
+  }
+  .sub-main{
+    margin-top: 0rem;
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+  .video-con{
+    margin-top: 0rem;
+    margin-left: -4rem;
+  }
+  .main{
+    flex-direction: column;
+    align-items: center;
+  }
+
+}
+
+
+/* header ends here */

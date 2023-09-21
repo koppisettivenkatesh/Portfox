@@ -1,0 +1,17 @@
+
+.about-section{
+  display: flex;
+  flex-direction: row;
+  margin-top: 7rem;
+
+}
+
+@media (min-width: 0px) and (max-width: 991px) {
+  .about-section{
+    flex-direction: column;
+  }
+  .font-size{
+    font-size: 1rem;
+    font-weight: bold;
+  }
+}

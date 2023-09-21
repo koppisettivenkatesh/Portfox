@@ -1,0 +1,69 @@
+<app-nav></app-nav>
+<app-miniloader *ngIf="miniLoader" ></app-miniloader>
+
+<!-- <header class="container" *ngIf="!miniLoader">
+  <div class="col-lg-4 col-12 col-md-8 ">
+    <ngx-skeleton-loader count="2" animation="line" [theme]="{height:' 3vh'}" *ngIf="skeletonStatus"></ngx-skeleton-loader>
+    <ngx-skeleton-loader count="1" animation="line" [theme]="{ width: '20%',height: '3vh'}" *ngIf="skeletonStatus"></ngx-skeleton-loader>
+    <h3 *ngIf="!skeletonStatus" >{{ header.firstSlide.title }}</h3>
+    <button (click)="tryNow()" class="btn-header text-capitalize my-4" *ngIf="!skeletonStatus">{{header.firstSlide.button}}</button>
+  </div>
+  <ngx-skeleton-loader count="1" animation="line" [theme]="{ width: '8%',height:'3vh'}" *ngIf="skeletonStatus"></ngx-skeleton-loader>
+  <div class="video-con" #myMedia >
+   <ngx-skeleton-loader
+      *ngIf="mediaStatus['firstSlideVideo'] == null"
+      count="1"
+      [theme]="{
+        'border-radius': '5px'  ,
+        height: '30vh',
+      }"
+    ></ngx-skeleton-loader>
+    <video class="col-11 col-md-11 col-lg-11 mx-4 display" [autoplay]="true" loop id="video" [src]="header.firstSlide.video" style="pointer-events: none;" [ngClass]="{ 'display-show' : !mediaStatus['firstSlideVideo']!=null }" (loadeddata)="onMediaLoad('firstSlideVideo')" ></video>
+  </div>
+</header> -->
+
+<main class="bg-main" *ngIf="!miniLoader">
+  <section class="container main col-12 col-md-12 col-lg-12">
+    <aside class="col-12 col-md-12 col-lg-6 g-1 my-5 ">
+      <div >
+        <ngx-skeleton-loader count="1" animation="line" [theme]="{height: '3vh'}" *ngIf="skeletonStatus"></ngx-skeleton-loader>
+        <ngx-skeleton-loader count="1" animation="line" [theme]="{ width: '20%',height: '3vh'}" *ngIf="skeletonStatus"></ngx-skeleton-loader>
+        <h1 class="fw-bold fs-4 col-lg-10" *ngIf="!skeletonStatus" >{{header.secondSlide.title}}</h1>
+        <ngx-skeleton-loader count="2" animation="line" [theme]="{ height: '3vh'}" *ngIf="skeletonStatus"></ngx-skeleton-loader>
+        <ngx-skeleton-loader count="1" animation="line" [theme]="{ width: '70%',height: '3vh'}" *ngIf="skeletonStatus"></ngx-skeleton-loader>
+        <p class="col-12" *ngIf="!skeletonStatus">{{header.secondSlide.titleContent}}</p>
+      </div>
+      <div class="sub-main">     
+        <div class=""> 
+          <svg *ngIf="!skeletonStatus" width="32px" height="32px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#757575"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#7C4DFF" stroke-width="4.08"> <path d="M12 10.2308L3.08495 7.02346M12 10.2308L20.9178 7.03406M12 10.2308V20.8791M5.13498 18.5771L10.935 20.6242C11.3297 20.7635 11.527 20.8331 11.7294 20.8608C11.909 20.8853 12.091 20.8853 12.2706 20.8608C12.473 20.8331 12.6703 20.7635 13.065 20.6242L18.865 18.5771C19.6337 18.3058 20.018 18.1702 20.3018 17.9269C20.5523 17.7121 20.7459 17.4386 20.8651 17.1308C21 16.7823 21 16.3747 21 15.5595V8.44058C21 7.62542 21 7.21785 20.8651 6.86935C20.7459 6.56155 20.5523 6.28804 20.3018 6.0732C20.018 5.82996 19.6337 5.69431 18.865 5.42301L13.065 3.37595C12.6703 3.23665 12.473 3.167 12.2706 3.13936C12.091 3.11484 11.909 3.11484 11.7294 3.13936C11.527 3.167 11.3297 3.23665 10.935 3.37595L5.13498 5.42301C4.36629 5.69431 3.98195 5.82996 3.69824 6.0732C3.44766 6.28804 3.25414 6.56155 3.13495 6.86935C3 7.21785 3 7.62542 3 8.44058V15.5595C3 16.3747 3 16.7823 3.13495 17.1308C3.25414 17.4386 3.44766 17.7121 3.69824 17.9269C3.98195 18.1702 4.36629 18.3058 5.13498 18.5771Z" stroke="#7C4DFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g><g id="SVGRepo_iconCarrier"> <path d="M12 10.2308L3.08495 7.02346M12 10.2308L20.9178 7.03406M12 10.2308V20.8791M5.13498 18.5771L10.935 20.6242C11.3297 20.7635 11.527 20.8331 11.7294 20.8608C11.909 20.8853 12.091 20.8853 12.2706 20.8608C12.473 20.8331 12.6703 20.7635 13.065 20.6242L18.865 18.5771C19.6337 18.3058 20.018 18.1702 20.3018 17.9269C20.5523 17.7121 20.7459 17.4386 20.8651 17.1308C21 16.7823 21 16.3747 21 15.5595V8.44058C21 7.62542 21 7.21785 20.8651 6.86935C20.7459 6.56155 20.5523 6.28804 20.3018 6.0732C20.018 5.82996 19.6337 5.69431 18.865 5.42301L13.065 3.37595C12.6703 3.23665 12.473 3.167 12.2706 3.13936C12.091 3.11484 11.909 3.11484 11.7294 3.13936C11.527 3.167 11.3297 3.23665 10.935 3.37595L5.13498 5.42301C4.36629 5.69431 3.98195 5.82996 3.69824 6.0732C3.44766 6.28804 3.25414 6.56155 3.13495 6.86935C3 7.21785 3 7.62542 3 8.44058V15.5595C3 16.3747 3 16.7823 3.13495 17.1308C3.25414 17.4386 3.44766 17.7121 3.69824 17.9269C3.98195 18.1702 4.36629 18.3058 5.13498 18.5771Z" stroke="#7C4DFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+          <h5 class="fw-bold fs-6" *ngIf="!skeletonStatus">{{header.secondSlide.subTitle.title1}}</h5>
+          <ngx-skeleton-loader count="1" animation="line" [theme]="{ width: '20%',height: '3vh'}" *ngIf="skeletonStatus"></ngx-skeleton-loader>
+          <ngx-skeleton-loader count="2" animation="line" [theme]="{ height: '3vh'}" *ngIf="skeletonStatus"></ngx-skeleton-loader>
+          <p *ngIf="!skeletonStatus">{{header.secondSlide.subTitle.titleContent1
+          }}</p>
+        </div>
+        <div class=""> 
+          <svg *ngIf="!skeletonStatus" width="32px" height="32px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M7 9H17M7 13H12M21 20L17.6757 18.3378C17.4237 18.2118 17.2977 18.1488 17.1656 18.1044C17.0484 18.065 16.9277 18.0365 16.8052 18.0193C16.6672 18 16.5263 18 16.2446 18H6.2C5.07989 18 4.51984 18 4.09202 17.782C3.71569 17.5903 3.40973 17.2843 3.21799 16.908C3 16.4802 3 15.9201 3 14.8V7.2C3 6.07989 3 5.51984 3.21799 5.09202C3.40973 4.71569 3.71569 4.40973 4.09202 4.21799C4.51984 4 5.0799 4 6.2 4H17.8C18.9201 4 19.4802 4 19.908 4.21799C20.2843 4.40973 20.5903 4.71569 20.782 5.09202C21 5.51984 21 6.0799 21 7.2V20Z" stroke="#7C4DFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+          <h5 class="fw-bold fs-6" *ngIf="!skeletonStatus">{{header.secondSlide.subTitle.title2}}</h5>
+          <ngx-skeleton-loader count="1" animation="line" [theme]="{ width: '20%',height: '3vh'}" *ngIf="skeletonStatus"></ngx-skeleton-loader>
+          <ngx-skeleton-loader count="2" animation="line" [theme]="{ height: '3vh'}" *ngIf="skeletonStatus"></ngx-skeleton-loader>
+          <p *ngIf="!skeletonStatus">{{header.secondSlide.subTitle.titleContent2}}</p>
+        </div>
+      </div>
+    </aside>
+    <figure class=" col-12 col-md-10 col-lg-5">
+      <ngx-skeleton-loader
+      *ngIf="mediaStatus['secondSlideImage'] == null"
+      count="1"
+      [theme]="{
+        'border-radius': '5px',
+        height: '30vh',
+      }"
+    ></ngx-skeleton-loader>
+      <img class="col-12 col-md-12 col-lg-12 custom-shadow display" [src]="header.secondSlide.img" alt="" [ngClass]="{ 'display-show' : !mediaStatus['secondSlideImage'] !=null }" (load)="onMediaLoad('secondSlideImage')" >
+    </figure>
+  </section>  
+  <section>
+
+  </section>
+</main>
