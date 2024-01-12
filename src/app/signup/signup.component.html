@@ -1,43 +1,49 @@
-<app-nav ></app-nav>
+<app-nav></app-nav>
+  <app-miniloader *ngIf="miniLoader" ></app-miniloader>
+  <section class="signup-section container signup-image-con col-md-6 col-lg-11" *ngIf="!miniLoader">
+    <div class="my-5 mx-2" >
+      <div class="container">
+        <div class="d-flex flex-column align-items-center gap-3 col-12 col-md-12 col-lg-11" >
 
-<app-miniloader *ngIf="miniLoader" ></app-miniloader>
+          <form action="" class="row gap-3 " #signForm="ngForm" (ngSubmit)="signForm.form.valid && signUp('home')">
+            <h3 class="my-5">Signup</h3>
+            <div class="input-group" >
+              <input type="text" placeholder="Email" class="form-control" name="email" #email="ngModel" [pattern]="regexForEmail" [(ngModel)]="signUpData.email" maxlength="40" [ngClass]="{'is-invalid' : email.errors}" >
+              <div class="invalid-feedback">Invalid Email</div>
+            </div>
+            <div class="input-group" >
+              <input type="password" class="form-control" id="password" placeholder="Password" name="password" #password="ngModel" [pattern]="regexForPassword" [(ngModel)]="signUpData.password" [ngClass]="{'is-invalid' : password.errors}">
+              <button class=" rounded bg-white border-0" (click)="showPassword($event)"  for="password">
+              <img [src]="signup.open" class="border-bottom border-end p-2  border-top"  style="width: 35px;"  *ngIf="passwordToggle" alt="">
+              <img [src]="signup.close" class=" p-2 border-bottom border-end border-top" style="width: 35px;"  *ngIf="!passwordToggle" alt=""></button>
+              <div class="invalid-feedback">Min 8 letter and at least one capital letter , symbol , number </div>
+            </div>
+            <div class="input-group" >
+              <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" name="confirmPassword" #confirmPassword="ngModel" (keypress)="onConfirmedPass()" [(ngModel)]="signUpData.confirmPassword"
+              [ngClass]="{'is-invalid' : signUpData.confirmPassword != signUpData.password && focus }">
+              <div class="invalid-feedback">Password Doesn't Match</div>
+            </div>
+            <button class="btn-submit p-2" id="btn" type="submit" [disabled]="!signForm.form.valid || signForm.form.pristine">Confirm</button>
+          </form>
 
-<section class="signup-section container signup-image-con col-md-6 col-lg-11" *ngIf="!miniLoader">
-  <div class="my-5 mx-2" >
-    <div class="container">
-      <h3 class="my-5">Signup</h3>
-      <div class="d-flex flex-column align-items-center gap-3 col-12 col-md-12 col-lg-11 ">
-        <form action="" class="row gap-3 ">
-          <div class="input-group">
-            <input type="email" placeholder="Email" class="form-control">
-          </div>
-          <div class="input-group">
-            <input type="password" class="form-control" id="password" placeholder="Password" name="password" >
-            <button class="border-0" type="button"  for="password">show</button>
-          </div>
-          <div class="input-group"> 
-            <input type="password" class="form-control" id="password" placeholder="Password" name="password" >
-          </div>  
-          <button class="btn-submit p-2" type="submit" >Confirm</button>
-        </form>
-        <p  class=" col-12 col-md-12 col-lg-12">Already  have an account ? <span (click)="navigate('login')">Login</span> </p>
-        <label class="text-center" >or</label>
-        <img class=" col-6 col-md-7 col-lg-8 cursor-pointer" [src]="signup.googleAuthImage" (load)="onMediaLoad('googleAuthImage')" [ngClass]="{ 'display-show' : !mediaStatus['googleAuthImage']}">
+          <p class="col-12 col-md-12 col-lg-12" >Already have an account ? <span (click)="navigate('login')">Login</span> </p>
+          <label class="text-center" >or</label>
+          <img class=" col-6 col-md-7 col-lg-8 cursor-pointer" [src]="signup.googleAuthImage" (load)="onMediaLoad('googleAuthImage')"  [ngClass]="{ 'display-hide' : mediaStatus['googleAuthImage']==null }">
+        </div>
       </div>
     </div>
-  </div>
-  <div class="col-10 col-md-4 col-lg-4 none-mobile container ">
-    <ngx-skeleton-loader count="1" animation="line" [theme]="{height:' 30vh'}" *ngIf="mediaStatus['img1']"></ngx-skeleton-loader>
-    <img class=" col-md-12 col-lg-12 mb-5 signup-image  display" [src]="signup.img1"  (load)="onMediaLoad('img1')" [ngClass]="{ 'display-show' : !mediaStatus['img1'] }" >
-    <ngx-skeleton-loader count="1" animation="line" [theme]="{height:' 30vh'}" *ngIf="mediaStatus['img2']"></ngx-skeleton-loader>
-    <img class=" col-md-12 col-lg-12 mb-5 signup-image  display" [src]="signup.img3" (load)="onMediaLoad('img2')"  [ngClass]="{ 'display-show' : !mediaStatus['img2'] }">
-  </div>
-  <div class="col-10 col-md-4 col-lg-4 my-4 none container ">
-    <ngx-skeleton-loader count="1" animation="line" [theme]="{height:' 30vh'}" *ngIf="mediaStatus['img3']"></ngx-skeleton-loader>
-    <img class="col-md-12 col-lg-12 mb-5 signup-image  display" [src]="signup.img2" (load)="onMediaLoad('img3')" [ngClass]="{ 'display-show' : !mediaStatus['img3'] }">
-    <ngx-skeleton-loader count="1" animation="line" [theme]="{height:' 30vh'}" *ngIf="mediaStatus['img4']"></ngx-skeleton-loader>
-    <img class="col-md-12 col-lg-12 mb-5 signup-image  display" [src]="signup.img4"  (load)="onMediaLoad('img4')" [ngClass]="{ 'display-show' : !mediaStatus['img4'] }">
-  </div>
-</section>
+    <div class="col-10 col-md-4 col-lg-4 none-mobile container ">
+      <ngx-skeleton-loader count="1" animation="" [theme]="{height:' 30vh'}" *ngIf="mediaStatus['img1'] == null"></ngx-skeleton-loader>
+      <img class=" col-md-12 col-lg-12 mb-5 signup-image   " [src]="signup.img1" (load)="onMediaLoad('img1')"  [ngClass]="{ 'display-hide' : mediaStatus['img1']==null }" >
+      <ngx-skeleton-loader count="1" animation="progress" [theme]="{height:' 30vh'}" *ngIf="mediaStatus['img2'] == null"></ngx-skeleton-loader>
+      <img class=" col-md-12 col-lg-12 mb-5 signup-image   " [src]="signup.img3" (load)="onMediaLoad('img2')"   [ngClass]="{ 'display-hide' : mediaStatus['img2']==null }" >
+    </div>
+    <div class="col-10 col-md-4 col-lg-4 my-4 none container ">
+      <ngx-skeleton-loader count="1" animation="progress" [theme]="{height:' 30vh'}" *ngIf="mediaStatus['img3'] == null"></ngx-skeleton-loader>
+      <img class="col-md-12 col-lg-12 mb-5 signup-image " [src]="signup.img2" (load)="onMediaLoad('img3')"  [ngClass]="{ 'display-hide' : mediaStatus['img3']==null }" >
+      <ngx-skeleton-loader count="1" animation="progress" [theme]="{height:' 30vh'}" *ngIf="mediaStatus['img4'] == null"></ngx-skeleton-loader>
+      <img class="col-md-12 col-lg-12 mb-5 signup-image  " [src]="signup.img4"  (load)="onMediaLoad('img4')"  [ngClass]="{ 'display-hide' : mediaStatus['img4']==null }" >
+    </div>
+  </section>
 
-
+  <app-footer *ngIf="!miniLoader"></app-footer>

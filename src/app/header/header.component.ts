@@ -1,79 +1,50 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { ServerService } from '../server.service';
-import { catchError, throwError } from 'rxjs';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-  
+export class HeaderComponent  implements OnInit{
 
-export class HeaderComponent {
+  mediaStatus: any = {};
 
-  skeletonStatus: any;
-  
-  mediaStatus: any ={}
-  
-  miniLoader: boolean = true
-  
-  header: any = {};
+  header :any = {}
 
-  constructor(private route: Router, private server: ServerService) {
-    this.getSession()
-  }
+  skeletonStatus: boolean = true;
+
+  miniLoader : boolean = true
+
+  template = false
+
+  constructor(private dataService: DataService , private route : Router) {}
 
   ngOnInit() {
-    this.fetchData();
+    this.template = false
+    this.miniLoading();
+    this.dataService.fetchData('header', 'header', () => {
+    this.header = this.dataService.getData();
+    setTimeout(() => {
+      this.skeletonStatus = false;
+    }, 2000);
+    });
   }
-
-  fetchData() {
-    if (sessionStorage.getItem('header') == null) {
-      this.skeletonStatus = true
-      this.server.getData()
-        .pipe(
-          catchError(err => {
-            return throwError(err + "Server Error");
-          }),
-        ).subscribe((data) => {
-          sessionStorage.setItem("header", JSON.stringify(data[0].header));
-          const { ...rest } = data[0].header;
-          this.header = {
-            ...rest
-          };          
-          setTimeout(() => {
-            this.miniLoader = false
-            setTimeout(() => {
-              this.skeletonStatus = false;
-            },2000)
-          }, 1000);
-        });
-    } else {
-      setTimeout(() => {
-        this.miniLoader = false
-        setTimeout(() => {
-          this.skeletonStatus = false;
-        },2000)
-      }, 1000);
-    }
-  }
-
-  getSession() {
-    if (sessionStorage.getItem('header') !== null) {
-      const sessionDataString = sessionStorage.getItem('header');
-      const { ...rest } = JSON.parse(sessionDataString || 'null');
-      this.header = {
-        ...rest
-      };
-    }
+  miniLoading() {
+    setTimeout(() => {
+      this.miniLoader = false;
+    }, 1000);
   }
 
   onMediaLoad(id: string) {
     this.mediaStatus[id] = false
- }
+  }
 
   tryNow() {
-    this.route.navigate(['login']);
+    this.template = true;
+  }
+  onHomeEmitter(event :any){
+    this.template = event
   }
 }

@@ -1,24 +1,26 @@
-<app-nav  ></app-nav>
-<app-miniloader *ngIf="miniLoader" ></app-miniloader>
+<app-nav></app-nav>
+
+<app-miniloader *ngIf="miniLoader"></app-miniloader>
 
 <figure class="contact-section container col-12 col-md-12 col-lg-12" *ngIf="!miniLoader">
   <div class="my-2 container">
     <ngx-skeleton-loader
-      *ngIf="mediaStatus"
+    *ngIf="mediaStatus['firstSlideImage'] == null"
       count="1"
       [theme]="{
         'border-radius': '5px',
         height: '30vh',
       }"
     ></ngx-skeleton-loader>
-    <img [src]="contact.img" class="col-12 col-md-12 col-lg-12 display" id="image" (load)="onMediaLoad()" [ngClass]="{ 'display-show' : !mediaStatus }"/>
+    <img [src]="contact.img" class="col-12 col-md-12 col-lg-12  " id="image" (load)="onMediaLoad('firstSlideImage')" [ngClass]="{ 'display-hide' : mediaStatus['firstSlideImage']==null }"/>
   </div>
 
   <figcaption class="my-3 container">
-    <ngx-skeleton-loader count="1" [theme]="{ width: '30%', height: '3vh' }" animation="line" *ngIf="skeletonStatus"></ngx-skeleton-loader>
-    <ngx-skeleton-loader count="3" animation="line" *ngIf="skeletonStatus"></ngx-skeleton-loader>
-    <ngx-skeleton-loader count="1" animation="line" [theme]="{ width: '50%' }" *ngIf="skeletonStatus"></ngx-skeleton-loader>
-    <h1 class="text-uppercase font-size" *ngIf="!skeletonStatus">{{ contact.title }}</h1>
-    <p class="col-11 col-md-12 col-lg-10 align-items-start" *ngIf="!skeletonStatus">{{ contact.content }}</p>
+    <ngx-skeleton-loader count="1" [theme]="{ width: '30%', height: '3vh' }" animation="progress" *ngIf="skeletonStatus"></ngx-skeleton-loader>
+    <ngx-skeleton-loader count="3" animation="progress" [theme]="{ height: '2vh'}" *ngIf="skeletonStatus"></ngx-skeleton-loader>
+    <ngx-skeleton-loader count="1" animation="progress" [theme]="{ width: '50%' , height: '2vh'}" *ngIf="skeletonStatus"></ngx-skeleton-loader>
+    <h1 class="text-uppercase font-size"  *ngIf="!skeletonStatus">{{ contact.title }}</h1>
+    <p class="col-11 col-md-12 col-lg-10 align-items-start"  *ngIf="!skeletonStatus">{{ contact.content }}</p>
   </figcaption>
 </figure>
+<app-footer *ngIf="!miniLoader" ></app-footer>

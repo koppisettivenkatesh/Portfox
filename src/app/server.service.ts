@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class ServerService {
 
-  private apiUrl = 'http://localhost:3000/api/data'
+  private apiUrl = 'https://serverportfolio.pythonanywhere.com/portfox'
 
   constructor(private http: HttpClient) { }
   

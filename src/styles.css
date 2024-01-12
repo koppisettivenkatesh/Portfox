@@ -6,14 +6,27 @@
   font-family: 'Qanelas-Regular' , serif;
 }
 
-.display{
-  transform: scale(0);
-}
-
-.display-show{
-  transform: scale(1);
+.display-hide{
+  width: 1px;
+  height: 1px;
 }
 
 .theme-color{
   color: #7C4DFF;
 }
+
+/* Adjust the scrollbar appearance as needed */
+::-webkit-scrollbar {
+  width:5px; /* Set the width of the scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #918e8e; /* Color of the scrollbar thumb */
+  border-radius: 20px; /* Rounded corners for the thumb */
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Color of the scrollbar track */
+}
+
+

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-miniloader',
@@ -7,6 +8,14 @@ import { Component } from '@angular/core';
 })
 export class MiniloaderComponent {
 
-  miniLoader = "https://drive.google.com/uc?export=download&id=1O4k5cryA7i8hH-WaLUbcXcvpGjurHGLj"
+  miniLoader: any = []
+
+  constructor(private dataService: DataService) {}
+
+  ngOnInit() {
+    this.dataService.fetchData('miniLoader', 'miniLoader', () => {
+    this.miniLoader= this.dataService.getData();
+    });
+  }
 
 }

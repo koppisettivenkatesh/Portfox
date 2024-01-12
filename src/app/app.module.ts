@@ -8,13 +8,14 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { HeaderComponent } from './header/header.component';
 import { LoaderComponent } from './loader/loader.component';
-import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { FooterComponent } from './footer/footer.component';
 import { MiniloaderComponent } from './miniloader/miniloader.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { TemplateComponent } from './template/template.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,18 +25,19 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
     SignupComponent,
     HeaderComponent,
     LoaderComponent,
-    HomeComponent,
     AboutComponent,
     ContactComponent,
     FooterComponent,
     MiniloaderComponent,
+    TemplateComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     NgxSkeletonLoaderModule,
-    
+    FormsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

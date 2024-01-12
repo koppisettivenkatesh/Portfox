@@ -1,20 +1,23 @@
 <nav class="nav">
   <div class="container p-2 nav-bar">
-    <div class="d-flex  align-items-center justify-content-between ">
-      <h2 [routerLink]="['']" class="cursor-pointer" >Portfox</h2>
+    <div class="d-flex align-items-center justify-content-between  ">
+      <h2 [routerLink]="['']" class="cursor-pointer"  >Portfox</h2>
       <svg (click)="onMenuToggle()" *ngIf="menuToggle" class="menu cursor-pointer"  width="32px" height="32px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 6H20M4 12H20M4 18H20" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
       <svg (click)="onMenuToggle()" *ngIf="!menuToggle" width="36px" class="menu cursor-pointer"  height="36px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 10H2m0 0l7-7m-7 7l7 7"></path> </g></svg>
     </div>
-    <div class="move nav-list  col-10 col-mg-12 "[ngClass]="{'container' : menuToggle}" >
+    <div class="move nav-list col-10 col-mg-12 " [ngClass]="{'container' : menuToggle}" >
       <ul class="nav-links text-uppercase fw-medium container my-2 gap-4 fs-6 list-unstyled fs-5 " [ngClass]="{'show' : menuToggle}"  >
-        <li class="cursor-pointer links " [routerLink]="['/home']"  >Home</li>
+        <li class="cursor-pointer links " [routerLink]="['/home']" (click)="onHome()" >Home</li>
         <li class="cursor-pointer links" [routerLink]="['/about']" >About</li>
         <li class="cursor-pointer links" [routerLink]="['/contact']" >Contact</li>
       </ul>
       <div class="float-end" >
-        <div class=" nav-btn-con gap-2 " [ngClass]="{'show' : menuToggle}">
+        <div class=" nav-btn-con gap-2 " [ngClass]="{'show' : menuToggle}" *ngIf="!AuthStatus">
           <button class="nav-btn" [routerLink]="['/login']"  >Login</button>
           <button class="nav-btn" [routerLink]="['/signup']"  >Signup</button>
+        </div>
+        <div  [ngClass]="{'show' : menuToggle}" *ngIf="AuthStatus">
+          <button class="nav-btn" >Logout</button>
         </div>
       </div>
     </div>

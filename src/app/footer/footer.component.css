@@ -1,0 +1,36 @@
+
+.row-type-footer , .row-type-links{
+  display: flex;
+  flex-direction: row;
+}
+
+
+.column-type-footer{
+  display: flex;
+  flex-direction: column;
+}
+
+footer{
+  background-color: #7C4DFF;
+}
+
+
+@media (max-width: 576px) {
+  .margin{
+    margin-top: 0rem;
+  }
+  .row-type-footer{
+    flex-direction: column;
+  }
+  .row-type-links{
+    flex-direction: row;
+  }
+
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+  .row-type-footer{
+    flex-direction: row;
+  }
+
+}

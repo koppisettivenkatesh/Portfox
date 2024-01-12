@@ -1,69 +1,490 @@
-<app-nav></app-nav>
-<app-miniloader *ngIf="miniLoader" ></app-miniloader>
+<app-nav (onHomeEmitter)="onHomeEmitter($event)"></app-nav>
 
-<!-- <header class="container" *ngIf="!miniLoader">
-  <div class="col-lg-4 col-12 col-md-8 ">
-    <ngx-skeleton-loader count="2" animation="line" [theme]="{height:' 3vh'}" *ngIf="skeletonStatus"></ngx-skeleton-loader>
-    <ngx-skeleton-loader count="1" animation="line" [theme]="{ width: '20%',height: '3vh'}" *ngIf="skeletonStatus"></ngx-skeleton-loader>
-    <h3 *ngIf="!skeletonStatus" >{{ header.firstSlide.title }}</h3>
-    <button (click)="tryNow()" class="btn-header text-capitalize my-4" *ngIf="!skeletonStatus">{{header.firstSlide.button}}</button>
-  </div>
-  <ngx-skeleton-loader count="1" animation="line" [theme]="{ width: '8%',height:'3vh'}" *ngIf="skeletonStatus"></ngx-skeleton-loader>
-  <div class="video-con" #myMedia >
-   <ngx-skeleton-loader
-      *ngIf="mediaStatus['firstSlideVideo'] == null"
+<app-miniloader class="my-5" *ngIf="miniLoader"></app-miniloader>
+<iframe src="https://portfox-project.web.app/template" *ngIf="template" frameborder="0" allowfullscreen></iframe>
+
+<main *ngIf="!template">
+  <header class="container" *ngIf="!miniLoader" id="firstSection">
+    <div class="col-lg-4 col-md-12 col-12 col-md-8">
+      <ngx-skeleton-loader
+        count="2"
+        animation="progress"
+        [theme]="{ height: ' 2vh' }"
+        *ngIf="skeletonStatus"
+      ></ngx-skeleton-loader>
+      <ngx-skeleton-loader
+        count="1"
+        animation="progress"
+        [theme]="{ width: '20%', height: '2vh' }"
+        *ngIf="skeletonStatus"
+      ></ngx-skeleton-loader>
+      <h3 class="fs-3" *ngIf="!skeletonStatus">
+        {{ header?.firstSlide?.title }}
+      </h3>
+      <button
+        (click)="tryNow()"
+        class="btn-header text-capitalize my-4"
+        *ngIf="!skeletonStatus"
+      >
+        {{ header?.firstSlide?.button }}
+      </button>
+    </div>
+    <ngx-skeleton-loader
       count="1"
-      [theme]="{
-        'border-radius': '5px'  ,
-        height: '30vh',
-      }"
+      animation="progress"
+      [theme]="{ width: '8%', height: '2vh' }"
+      *ngIf="skeletonStatus"
     ></ngx-skeleton-loader>
-    <video class="col-11 col-md-11 col-lg-11 mx-4 display" [autoplay]="true" loop id="video" [src]="header.firstSlide.video" style="pointer-events: none;" [ngClass]="{ 'display-show' : !mediaStatus['firstSlideVideo']!=null }" (loadeddata)="onMediaLoad('firstSlideVideo')" ></video>
-  </div>
-</header> -->
+    <div class="video-con mx-1" #myMedia>
+      <ngx-skeleton-loader
+        *ngIf="mediaStatus['firstSlideVideo'] == null"
+        count="1"
+        [theme]="{
+        'border-radius': '5px'  ,
+        height: '18rem',
+      }"
+      ></ngx-skeleton-loader>
+      <video
+        class="col-11 col-md-11 col-lg-11 mx-4"
+        [autoplay]="true"
+        loop
+        id="video"
+        [src]="header?.firstSlide?.video"
+        style="pointer-events: none"
+        [ngClass]="{ 'display-hide': mediaStatus['firstSlideVideo'] == null }"
+        (loadeddata)="onMediaLoad('firstSlideVideo')"
+      ></video>
+    </div>
+  </header>
 
-<main class="bg-main" *ngIf="!miniLoader">
-  <section class="container main col-12 col-md-12 col-lg-12">
-    <aside class="col-12 col-md-12 col-lg-6 g-1 my-5 ">
-      <div >
-        <ngx-skeleton-loader count="1" animation="line" [theme]="{height: '3vh'}" *ngIf="skeletonStatus"></ngx-skeleton-loader>
-        <ngx-skeleton-loader count="1" animation="line" [theme]="{ width: '20%',height: '3vh'}" *ngIf="skeletonStatus"></ngx-skeleton-loader>
-        <h1 class="fw-bold fs-4 col-lg-10" *ngIf="!skeletonStatus" >{{header.secondSlide.title}}</h1>
-        <ngx-skeleton-loader count="2" animation="line" [theme]="{ height: '3vh'}" *ngIf="skeletonStatus"></ngx-skeleton-loader>
-        <ngx-skeleton-loader count="1" animation="line" [theme]="{ width: '70%',height: '3vh'}" *ngIf="skeletonStatus"></ngx-skeleton-loader>
-        <p class="col-12" *ngIf="!skeletonStatus">{{header.secondSlide.titleContent}}</p>
-      </div>
-      <div class="sub-main">     
-        <div class=""> 
-          <svg *ngIf="!skeletonStatus" width="32px" height="32px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#757575"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#7C4DFF" stroke-width="4.08"> <path d="M12 10.2308L3.08495 7.02346M12 10.2308L20.9178 7.03406M12 10.2308V20.8791M5.13498 18.5771L10.935 20.6242C11.3297 20.7635 11.527 20.8331 11.7294 20.8608C11.909 20.8853 12.091 20.8853 12.2706 20.8608C12.473 20.8331 12.6703 20.7635 13.065 20.6242L18.865 18.5771C19.6337 18.3058 20.018 18.1702 20.3018 17.9269C20.5523 17.7121 20.7459 17.4386 20.8651 17.1308C21 16.7823 21 16.3747 21 15.5595V8.44058C21 7.62542 21 7.21785 20.8651 6.86935C20.7459 6.56155 20.5523 6.28804 20.3018 6.0732C20.018 5.82996 19.6337 5.69431 18.865 5.42301L13.065 3.37595C12.6703 3.23665 12.473 3.167 12.2706 3.13936C12.091 3.11484 11.909 3.11484 11.7294 3.13936C11.527 3.167 11.3297 3.23665 10.935 3.37595L5.13498 5.42301C4.36629 5.69431 3.98195 5.82996 3.69824 6.0732C3.44766 6.28804 3.25414 6.56155 3.13495 6.86935C3 7.21785 3 7.62542 3 8.44058V15.5595C3 16.3747 3 16.7823 3.13495 17.1308C3.25414 17.4386 3.44766 17.7121 3.69824 17.9269C3.98195 18.1702 4.36629 18.3058 5.13498 18.5771Z" stroke="#7C4DFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g><g id="SVGRepo_iconCarrier"> <path d="M12 10.2308L3.08495 7.02346M12 10.2308L20.9178 7.03406M12 10.2308V20.8791M5.13498 18.5771L10.935 20.6242C11.3297 20.7635 11.527 20.8331 11.7294 20.8608C11.909 20.8853 12.091 20.8853 12.2706 20.8608C12.473 20.8331 12.6703 20.7635 13.065 20.6242L18.865 18.5771C19.6337 18.3058 20.018 18.1702 20.3018 17.9269C20.5523 17.7121 20.7459 17.4386 20.8651 17.1308C21 16.7823 21 16.3747 21 15.5595V8.44058C21 7.62542 21 7.21785 20.8651 6.86935C20.7459 6.56155 20.5523 6.28804 20.3018 6.0732C20.018 5.82996 19.6337 5.69431 18.865 5.42301L13.065 3.37595C12.6703 3.23665 12.473 3.167 12.2706 3.13936C12.091 3.11484 11.909 3.11484 11.7294 3.13936C11.527 3.167 11.3297 3.23665 10.935 3.37595L5.13498 5.42301C4.36629 5.69431 3.98195 5.82996 3.69824 6.0732C3.44766 6.28804 3.25414 6.56155 3.13495 6.86935C3 7.21785 3 7.62542 3 8.44058V15.5595C3 16.3747 3 16.7823 3.13495 17.1308C3.25414 17.4386 3.44766 17.7121 3.69824 17.9269C3.98195 18.1702 4.36629 18.3058 5.13498 18.5771Z" stroke="#7C4DFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-          <h5 class="fw-bold fs-6" *ngIf="!skeletonStatus">{{header.secondSlide.subTitle.title1}}</h5>
-          <ngx-skeleton-loader count="1" animation="line" [theme]="{ width: '20%',height: '3vh'}" *ngIf="skeletonStatus"></ngx-skeleton-loader>
-          <ngx-skeleton-loader count="2" animation="line" [theme]="{ height: '3vh'}" *ngIf="skeletonStatus"></ngx-skeleton-loader>
-          <p *ngIf="!skeletonStatus">{{header.secondSlide.subTitle.titleContent1
-          }}</p>
-        </div>
-        <div class=""> 
-          <svg *ngIf="!skeletonStatus" width="32px" height="32px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M7 9H17M7 13H12M21 20L17.6757 18.3378C17.4237 18.2118 17.2977 18.1488 17.1656 18.1044C17.0484 18.065 16.9277 18.0365 16.8052 18.0193C16.6672 18 16.5263 18 16.2446 18H6.2C5.07989 18 4.51984 18 4.09202 17.782C3.71569 17.5903 3.40973 17.2843 3.21799 16.908C3 16.4802 3 15.9201 3 14.8V7.2C3 6.07989 3 5.51984 3.21799 5.09202C3.40973 4.71569 3.71569 4.40973 4.09202 4.21799C4.51984 4 5.0799 4 6.2 4H17.8C18.9201 4 19.4802 4 19.908 4.21799C20.2843 4.40973 20.5903 4.71569 20.782 5.09202C21 5.51984 21 6.0799 21 7.2V20Z" stroke="#7C4DFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-          <h5 class="fw-bold fs-6" *ngIf="!skeletonStatus">{{header.secondSlide.subTitle.title2}}</h5>
-          <ngx-skeleton-loader count="1" animation="line" [theme]="{ width: '20%',height: '3vh'}" *ngIf="skeletonStatus"></ngx-skeleton-loader>
-          <ngx-skeleton-loader count="2" animation="line" [theme]="{ height: '3vh'}" *ngIf="skeletonStatus"></ngx-skeleton-loader>
-          <p *ngIf="!skeletonStatus">{{header.secondSlide.subTitle.titleContent2}}</p>
+  <section
+    class="container row-type col-12 col-md-12 col-lg-12"
+    id="secondSection"
+    *ngIf="!miniLoader"
+  >
+    <aside class="col-12 col-md-12 col-lg-6 g-1 my-4">
+      <ngx-skeleton-loader
+        count="1"
+        animation="progress"
+        [theme]="{ width: '60%', height: '2vh' }"
+        *ngIf="skeletonStatus"
+      ></ngx-skeleton-loader>
+      <h1 class="fs-3 col-lg-10" *ngIf="!skeletonStatus">
+        {{ header?.secondSlide?.title }}
+      </h1>
+      <ngx-skeleton-loader
+        count="2"
+        animation="progress"
+        [theme]="{ height: '2vh' }"
+        *ngIf="skeletonStatus"
+      ></ngx-skeleton-loader>
+      <ngx-skeleton-loader
+        count="1"
+        animation="progress"
+        [theme]="{ width: '70%', height: '2vh' }"
+        *ngIf="skeletonStatus"
+      ></ngx-skeleton-loader>
+      <p class="col-12" *ngIf="!skeletonStatus">
+        {{ header?.secondSlide?.Content }}
+      </p>
+      <div class="content-row my-3">
+        <div *ngFor="let headerData of header?.secondSlide?.data">
+          <div class="col-lg-2 my-2">
+            <svg
+              *ngIf="!skeletonStatus"
+              width="32px"
+              height="32px"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              stroke="#757575"
+            >
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke="#7C4DFF"
+                stroke-width="4.08"
+              >
+                <path
+                  d="M12 10.2308L3.08495 7.02346M12 10.2308L20.9178 7.03406M12 10.2308V20.8791M5.13498 18.5771L10.935 20.6242C11.3297 20.7635 11.527 20.8331 11.7294 20.8608C11.909 20.8853 12.091 20.8853 12.2706 20.8608C12.473 20.8331 12.6703 20.7635 13.065 20.6242L18.865 18.5771C19.6337 18.3058 20.018 18.1702 20.3018 17.9269C20.5523 17.7121 20.7459 17.4386 20.8651 17.1308C21 16.7823 21 16.3747 21 15.5595V8.44058C21 7.62542 21 7.21785 20.8651 6.86935C20.7459 6.56155 20.5523 6.28804 20.3018 6.0732C20.018 5.82996 19.6337 5.69431 18.865 5.42301L13.065 3.37595C12.6703 3.23665 12.473 3.167 12.2706 3.13936C12.091 3.11484 11.909 3.11484 11.7294 3.13936C11.527 3.167 11.3297 3.23665 10.935 3.37595L5.13498 5.42301C4.36629 5.69431 3.98195 5.82996 3.69824 6.0732C3.44766 6.28804 3.25414 6.56155 3.13495 6.86935C3 7.21785 3 7.62542 3 8.44058V15.5595C3 16.3747 3 16.7823 3.13495 17.1308C3.25414 17.4386 3.44766 17.7121 3.69824 17.9269C3.98195 18.1702 4.36629 18.3058 5.13498 18.5771Z"
+                  stroke="#7C4DFF"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+              </g>
+              <g id="SVGRepo_iconCarrier">
+                <path
+                  d="M12 10.2308L3.08495 7.02346M12 10.2308L20.9178 7.03406M12 10.2308V20.8791M5.13498 18.5771L10.935 20.6242C11.3297 20.7635 11.527 20.8331 11.7294 20.8608C11.909 20.8853 12.091 20.8853 12.2706 20.8608C12.473 20.8331 12.6703 20.7635 13.065 20.6242L18.865 18.5771C19.6337 18.3058 20.018 18.1702 20.3018 17.9269C20.5523 17.7121 20.7459 17.4386 20.8651 17.1308C21 16.7823 21 16.3747 21 15.5595V8.44058C21 7.62542 21 7.21785 20.8651 6.86935C20.7459 6.56155 20.5523 6.28804 20.3018 6.0732C20.018 5.82996 19.6337 5.69431 18.865 5.42301L13.065 3.37595C12.6703 3.23665 12.473 3.167 12.2706 3.13936C12.091 3.11484 11.909 3.11484 11.7294 3.13936C11.527 3.167 11.3297 3.23665 10.935 3.37595L5.13498 5.42301C4.36629 5.69431 3.98195 5.82996 3.69824 6.0732C3.44766 6.28804 3.25414 6.56155 3.13495 6.86935C3 7.21785 3 7.62542 3 8.44058V15.5595C3 16.3747 3 16.7823 3.13495 17.1308C3.25414 17.4386 3.44766 17.7121 3.69824 17.9269C3.98195 18.1702 4.36629 18.3058 5.13498 18.5771Z"
+                  stroke="#000"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+              </g>
+            </svg>
+            <ngx-skeleton-loader
+              count="1"
+              animation="progress"
+              [theme]="{ width: '10%', height: '2vh' }"
+              *ngIf="skeletonStatus"
+            ></ngx-skeleton-loader>
+          </div>
+          <div class="col-lg-10">
+            <h5 class="fw-bold fs-6" *ngIf="!skeletonStatus">
+              {{ headerData?.title }}
+            </h5>
+            <ngx-skeleton-loader
+              count="1"
+              animation="progress"
+              [theme]="{ height: '2vh' }"
+              *ngIf="skeletonStatus"
+            ></ngx-skeleton-loader>
+            <p *ngIf="!skeletonStatus">{{ headerData?.content }}</p>
+          </div>
         </div>
       </div>
     </aside>
-    <figure class=" col-12 col-md-10 col-lg-5">
+    <figure class="desktop-site col-12 col-md-10 col-lg-5">
       <ngx-skeleton-loader
-      *ngIf="mediaStatus['secondSlideImage'] == null"
-      count="1"
-      [theme]="{
-        'border-radius': '5px',
-        height: '30vh',
-      }"
-    ></ngx-skeleton-loader>
-      <img class="col-12 col-md-12 col-lg-12 custom-shadow display" [src]="header.secondSlide.img" alt="" [ngClass]="{ 'display-show' : !mediaStatus['secondSlideImage'] !=null }" (load)="onMediaLoad('secondSlideImage')" >
+        *ngIf="mediaStatus['secondSlideImage'] == null"
+        count="1"
+        [theme]="{ 'border-radius': '5px', height: '27rem' }"
+      ></ngx-skeleton-loader>
+      <img
+        class="col-12 col-md-12 col-lg-12 custom-shadow"
+        [src]="header?.secondSlide?.img"
+        alt=""
+        [ngClass]="{ 'display-hide': mediaStatus['secondSlideImage'] == null }"
+        (load)="onMediaLoad('secondSlideImage')"
+      />
     </figure>
-  </section>  
-  <section>
+  </section>
 
+  <section class="container margin my-5" id="thirdSection" *ngIf="!miniLoader">
+    <h1 class="fs-3 text-center" *ngIf="!skeletonStatus">
+      {{ header?.thirdSlide?.title }}
+    </h1>
+    <ngx-skeleton-loader
+      count="5"
+      animation="progress"
+      [theme]="{ height: '2vh' }"
+      *ngIf="skeletonStatus"
+    ></ngx-skeleton-loader>
+    <div class="content-row my-4">
+      <div class="" *ngFor="let headerData of header?.thirdSlide?.data">
+        <div class="col-lg-2 my-4">
+          <svg
+            *ngIf="!skeletonStatus"
+            width="32px"
+            height="32px"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            stroke="#757575"
+          >
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke="#7C4DFF"
+              stroke-width="4.08"
+            >
+              <path
+                d="M12 10.2308L3.08495 7.02346M12 10.2308L20.9178 7.03406M12 10.2308V20.8791M5.13498 18.5771L10.935 20.6242C11.3297 20.7635 11.527 20.8331 11.7294 20.8608C11.909 20.8853 12.091 20.8853 12.2706 20.8608C12.473 20.8331 12.6703 20.7635 13.065 20.6242L18.865 18.5771C19.6337 18.3058 20.018 18.1702 20.3018 17.9269C20.5523 17.7121 20.7459 17.4386 20.8651 17.1308C21 16.7823 21 16.3747 21 15.5595V8.44058C21 7.62542 21 7.21785 20.8651 6.86935C20.7459 6.56155 20.5523 6.28804 20.3018 6.0732C20.018 5.82996 19.6337 5.69431 18.865 5.42301L13.065 3.37595C12.6703 3.23665 12.473 3.167 12.2706 3.13936C12.091 3.11484 11.909 3.11484 11.7294 3.13936C11.527 3.167 11.3297 3.23665 10.935 3.37595L5.13498 5.42301C4.36629 5.69431 3.98195 5.82996 3.69824 6.0732C3.44766 6.28804 3.25414 6.56155 3.13495 6.86935C3 7.21785 3 7.62542 3 8.44058V15.5595C3 16.3747 3 16.7823 3.13495 17.1308C3.25414 17.4386 3.44766 17.7121 3.69824 17.9269C3.98195 18.1702 4.36629 18.3058 5.13498 18.5771Z"
+                stroke="#7C4DFF"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </g>
+            <g id="SVGRepo_iconCarrier">
+              <path
+                d="M12 10.2308L3.08495 7.02346M12 10.2308L20.9178 7.03406M12 10.2308V20.8791M5.13498 18.5771L10.935 20.6242C11.3297 20.7635 11.527 20.8331 11.7294 20.8608C11.909 20.8853 12.091 20.8853 12.2706 20.8608C12.473 20.8331 12.6703 20.7635 13.065 20.6242L18.865 18.5771C19.6337 18.3058 20.018 18.1702 20.3018 17.9269C20.5523 17.7121 20.7459 17.4386 20.8651 17.1308C21 16.7823 21 16.3747 21 15.5595V8.44058C21 7.62542 21 7.21785 20.8651 6.86935C20.7459 6.56155 20.5523 6.28804 20.3018 6.0732C20.018 5.82996 19.6337 5.69431 18.865 5.42301L13.065 3.37595C12.6703 3.23665 12.473 3.167 12.2706 3.13936C12.091 3.11484 11.909 3.11484 11.7294 3.13936C11.527 3.167 11.3297 3.23665 10.935 3.37595L5.13498 5.42301C4.36629 5.69431 3.98195 5.82996 3.69824 6.0732C3.44766 6.28804 3.25414 6.56155 3.13495 6.86935C3 7.21785 3 7.62542 3 8.44058V15.5595C3 16.3747 3 16.7823 3.13495 17.1308C3.25414 17.4386 3.44766 17.7121 3.69824 17.9269C3.98195 18.1702 4.36629 18.3058 5.13498 18.5771Z"
+                stroke="#000"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </g>
+          </svg>
+          <ngx-skeleton-loader
+            count="1"
+            animation="progress"
+            [theme]="{ width: '10%', height: '2vh' }"
+            *ngIf="skeletonStatus"
+          ></ngx-skeleton-loader>
+        </div>
+        <div class="col-lg-10">
+          <h5 class="fw-bold fs-6" *ngIf="!skeletonStatus">
+            {{ headerData?.title }}
+          </h5>
+          <ngx-skeleton-loader
+            count="1"
+            animation="progress"
+            [theme]="{ height: '2vh' }"
+            *ngIf="skeletonStatus"
+          ></ngx-skeleton-loader>
+          <p *ngIf="!skeletonStatus">{{ headerData?.content }}</p>
+          <ngx-skeleton-loader
+            count="2"
+            animation="progress"
+            [theme]="{ height: '2vh' }"
+            *ngIf="skeletonStatus"
+          ></ngx-skeleton-loader>
+          <a
+            [href]="headerData.url"
+            class="text-dark text-decoration-none"
+            *ngIf="!skeletonStatus"
+            >{{ header?.thirdSlide?.linkTitle }}
+            <svg
+              width="25px"
+              height="25px"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                <path
+                  d="M9.71069 18.2929C10.1012 18.6834 10.7344 18.6834 11.1249 18.2929L16.0123 13.4006C16.7927 12.6195 16.7924 11.3537 16.0117 10.5729L11.1213 5.68254C10.7308 5.29202 10.0976 5.29202 9.70708 5.68254C9.31655 6.07307 9.31655 6.70623 9.70708 7.09676L13.8927 11.2824C14.2833 11.6729 14.2833 12.3061 13.8927 12.6966L9.71069 16.8787C9.32016 17.2692 9.32016 17.9023 9.71069 18.2929Z"
+                  fill="#635f5f"
+                ></path>
+              </g>
+            </svg>
+          </a>
+          <ngx-skeleton-loader
+            count="1"
+            animation="progress"
+            [theme]="{ width: '10%', height: '2vh' }"
+            *ngIf="skeletonStatus"
+          ></ngx-skeleton-loader>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="container row-type col-12 col-md-12 col-lg-12 margin"
+    id="fourthSection"
+    *ngIf="!miniLoader"
+  >
+    <figure class="col-12 col-md-10 col-lg-5">
+      <ngx-skeleton-loader
+        *ngIf="mediaStatus['fourthSlideImage'] == null"
+        count="1"
+        [theme]="{'border-radius': '5px',height: '20rem',  }"
+      ></ngx-skeleton-loader>
+      <img
+        class="col-12 col-md-12 col-lg-12 custom-shadow"
+        [src]="header?.fourthSlide?.img"
+        alt=""
+        [ngClass]="{ 'display-hide': mediaStatus['fourthSlideImage'] == null }"
+        (load)="onMediaLoad('fourthSlideImage')"
+      />
+    </figure>
+    <aside class="col-12 col-md-12 col-lg-6 g-1 my-3">
+      <ngx-skeleton-loader
+        count="1"
+        animation="progress"
+        [theme]="{ width: '30%', height: '2vh' }"
+        *ngIf="skeletonStatus"
+      ></ngx-skeleton-loader>
+      <svg
+        *ngIf="!skeletonStatus"
+        width="200px"
+        height="64px"
+        viewBox="0 0 160 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+        <g
+          id="SVGRepo_tracerCarrier"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        ></g>
+        <g id="SVGRepo_iconCarrier">
+          <path
+            d="M9.15316 5.40838C10.4198 3.13613 11.0531 2 12 2C12.9469 2 13.5802 3.13612 14.8468 5.40837L15.1745 5.99623C15.5345 6.64193 15.7144 6.96479 15.9951 7.17781C16.2757 7.39083 16.6251 7.4699 17.3241 7.62805L17.9605 7.77203C20.4201 8.32856 21.65 8.60682 21.9426 9.54773C22.2352 10.4886 21.3968 11.4691 19.7199 13.4299L19.2861 13.9372C18.8096 14.4944 18.5713 14.773 18.4641 15.1177C18.357 15.4624 18.393 15.8341 18.465 16.5776L18.5306 17.2544C18.7841 19.8706 18.9109 21.1787 18.1449 21.7602C17.3788 22.3417 16.2273 21.8115 13.9243 20.7512L13.3285 20.4768C12.6741 20.1755 12.3469 20.0248 12 20.0248C11.6531 20.0248 11.3259 20.1755 10.6715 20.4768L10.0757 20.7512C7.77268 21.8115 6.62118 22.3417 5.85515 21.7602C5.08912 21.1787 5.21588 19.8706 5.4694 17.2544L5.53498 16.5776C5.60703 15.8341 5.64305 15.4624 5.53586 15.1177C5.42868 14.773 5.19043 14.4944 4.71392 13.9372L4.2801 13.4299C2.60325 11.4691 1.76482 10.4886 2.05742 9.54773C2.35002 8.60682 3.57986 8.32856 6.03954 7.77203L6.67589 7.62805C7.37485 7.4699 7.72433 7.39083 8.00494 7.17781C8.28555 6.96479 8.46553 6.64194 8.82547 5.99623L9.15316 5.40838Z"
+            fill="#1C274C"
+          ></path>
+
+          <path
+            d="M29.15316 5.40838C30.4198 3.13613 31.0531 2 32 2C32.9469 2 33.5802 3.13612 34.8468 5.40837L35.1745 5.99623C35.5345 6.64193 35.7144 6.96479 35.9951 7.17781C36.2757 7.39083 36.6251 7.4699 37.3241 7.62805L37.9605 7.77203C40.4201 8.32856 41.65 8.60682 41.9426 9.54773C42.2352 10.4886 41.3968 11.4691 39.7199 13.4299L39.2861 13.9372C38.8096 14.4944 38.5713 14.773 38.4641 15.1177C38.357 15.4624 38.393 15.8341 38.465 16.5776L38.5306 17.2544C38.7841 19.8706 38.9109 21.1787 38.1449 21.7602C37.3788 22.3417 36.2273 21.8115 33.9243 20.7512L33.3285 20.4768C32.6741 20.1755 32.3469 20.0248 32 20.0248C31.6531 20.0248 31.3259 20.1755 30.6715 20.4768L30.0757 20.7512C27.77268 21.8115 26.62118 22.3417 25.85515 21.7602C25.08912 21.1787 25.21588 19.8706 25.4694 17.2544L25.53498 16.5776C25.60703 15.8341 25.64305 15.4624 25.53586 15.1177C25.42868 14.773 25.19043 14.4944 24.71392 13.9372L24.2801 13.4299C22.60325 11.4691 21.76482 10.4886 22.05742 9.54773C22.35002 8.60682 23.57986 8.32856 26.03954 7.77203L26.67589 7.62805C27.37485 7.4699 27.72433 7.39083 28.00494 7.17781C28.28555 6.96479 28.46553 6.64194 28.82547 5.99623L29.15316 5.40838Z"
+            fill="#1C274C"
+            transform="translate(1)"
+          ></path>
+
+          <path
+            d="M29.15316 5.40838C30.4198 3.13613 31.0531 2 32 2C32.9469 2 33.5802 3.13612 34.8468 5.40837L35.1745 5.99623C35.5345 6.64193 35.7144 6.96479 35.9951 7.17781C36.2757 7.39083 36.6251 7.4699 37.3241 7.62805L37.9605 7.77203C40.4201 8.32856 41.65 8.60682 41.9426 9.54773C42.2352 10.4886 41.3968 11.4691 39.7199 13.4299L39.2861 13.9372C38.8096 14.4944 38.5713 14.773 38.4641 15.1177C38.357 15.4624 38.393 15.8341 38.465 16.5776L38.5306 17.2544C38.7841 19.8706 38.9109 21.1787 38.1449 21.7602C37.3788 22.3417 36.2273 21.8115 33.9243 20.7512L33.3285 20.4768C32.6741 20.1755 32.3469 20.0248 32 20.0248C31.6531 20.0248 31.3259 20.1755 30.6715 20.4768L30.0757 20.7512C27.77268 21.8115 26.62118 22.3417 25.85515 21.7602C25.08912 21.1787 25.21588 19.8706 25.4694 17.2544L25.53498 16.5776C25.60703 15.8341 25.64305 15.4624 25.53586 15.1177C25.42868 14.773 25.19043 14.4944 24.71392 13.9372L24.2801 13.4299C22.60325 11.4691 21.76482 10.4886 22.05742 9.54773C22.35002 8.60682 23.57986 8.32856 26.03954 7.77203L26.67589 7.62805C27.37485 7.4699 27.72433 7.39083 28.00494 7.17781C28.28555 6.96479 28.46553 6.64194 28.82547 5.99623L29.15316 5.40838Z"
+            fill="#1C274C"
+            transform="translate(22)"
+          ></path>
+
+          <path
+            d="M29.15316 5.40838C30.4198 3.13613 31.0531 2 32 2C32.9469 2 33.5802 3.13612 34.8468 5.40837L35.1745 5.99623C35.5345 6.64193 35.7144 6.96479 35.9951 7.17781C36.2757 7.39083 36.6251 7.4699 37.3241 7.62805L37.9605 7.77203C40.4201 8.32856 41.65 8.60682 41.9426 9.54773C42.2352 10.4886 41.3968 11.4691 39.7199 13.4299L39.2861 13.9372C38.8096 14.4944 38.5713 14.773 38.4641 15.1177C38.357 15.4624 38.393 15.8341 38.465 16.5776L38.5306 17.2544C38.7841 19.8706 38.9109 21.1787 38.1449 21.7602C37.3788 22.3417 36.2273 21.8115 33.9243 20.7512L33.3285 20.4768C32.6741 20.1755 32.3469 20.0248 32 20.0248C31.6531 20.0248 31.3259 20.1755 30.6715 20.4768L30.0757 20.7512C27.77268 21.8115 26.62118 22.3417 25.85515 21.7602C25.08912 21.1787 25.21588 19.8706 25.4694 17.2544L25.53498 16.5776C25.60703 15.8341 25.64305 15.4624 25.53586 15.1177C25.42868 14.773 25.19043 14.4944 24.71392 13.9372L24.2801 13.4299C22.60325 11.4691 21.76482 10.4886 22.05742 9.54773C22.35002 8.60682 23.57986 8.32856 26.03954 7.77203L26.67589 7.62805C27.37485 7.4699 27.72433 7.39083 28.00494 7.17781C28.28555 6.96479 28.46553 6.64194 28.82547 5.99623L29.15316 5.40838Z"
+            fill="#1C274C"
+            transform="translate(44)"
+          ></path>
+
+          <path
+            d="M29.15316 5.40838C30.4198 3.13613 31.0531 2 32 2C32.9469 2 33.5802 3.13612 34.8468 5.40837L35.1745 5.99623C35.5345 6.64193 35.7144 6.96479 35.9951 7.17781C36.2757 7.39083 36.6251 7.4699 37.3241 7.62805L37.9605 7.77203C40.4201 8.32856 41.65 8.60682 41.9426 9.54773C42.2352 10.4886 41.3968 11.4691 39.7199 13.4299L39.2861 13.9372C38.8096 14.4944 38.5713 14.773 38.4641 15.1177C38.357 15.4624 38.393 15.8341 38.465 16.5776L38.5306 17.2544C38.7841 19.8706 38.9109 21.1787 38.1449 21.7602C37.3788 22.3417 36.2273 21.8115 33.9243 20.7512L33.3285 20.4768C32.6741 20.1755 32.3469 20.0248 32 20.0248C31.6531 20.0248 31.3259 20.1755 30.6715 20.4768L30.0757 20.7512C27.77268 21.8115 26.62118 22.3417 25.85515 21.7602C25.08912 21.1787 25.21588 19.8706 25.4694 17.2544L25.53498 16.5776C25.60703 15.8341 25.64305 15.4624 25.53586 15.1177C25.42868 14.773 25.19043 14.4944 24.71392 13.9372L24.2801 13.4299C22.60325 11.4691 21.76482 10.4886 22.05742 9.54773C22.35002 8.60682 23.57986 8.32856 26.03954 7.77203L26.67589 7.62805C27.37485 7.4699 27.72433 7.39083 28.00494 7.17781C28.28555 6.96479 28.46553 6.64194 28.82547 5.99623L29.15316 5.40838Z"
+            fill="#1C274C"
+            transform="translate(67)"
+          ></path>
+        </g>
+      </svg>
+      <ngx-skeleton-loader
+        count="1"
+        animation="progress"
+        [theme]="{ height: '2vh' }"
+        *ngIf="skeletonStatus"
+      ></ngx-skeleton-loader>
+      <ngx-skeleton-loader
+        count="1"
+        animation="progress"
+        [theme]="{ width: '30%', height: '2vh' }"
+        *ngIf="skeletonStatus"
+      ></ngx-skeleton-loader>
+      <p class="col-12" *ngIf="!skeletonStatus">
+        {{ header?.fourthSlide?.content }}
+      </p>
+      <div class="">
+        <h5 class="fw-bold fs-6" *ngIf="!skeletonStatus">
+          {{ header?.fourthSlide?.ceoName }}
+        </h5>
+        <p *ngIf="!skeletonStatus">{{ header?.fourthSlide?.position }}</p>
+        <ngx-skeleton-loader
+          count="2"
+          animation="progress"
+          [theme]="{ width: '20%', height: '2vh' }"
+          *ngIf="skeletonStatus"
+        ></ngx-skeleton-loader>
+      </div>
+    </aside>
+  </section>
+
+  <section
+    class="container margin col-11 border-black border"
+    id="fifthSection"
+    *ngIf="!miniLoader"
+  >
+    <div class="container col-lg-5 p-4" *ngIf="skeletonStatus">
+      <ngx-skeleton-loader
+        count="3"
+        animation="progress"
+        [theme]="{ width: '100%', height: '2vh' }"
+      ></ngx-skeleton-loader>
+    </div>
+    <div class="d-flex flex-column align-items-center p-4">
+      <h1 class="fs-3" *ngIf="!skeletonStatus">
+        {{ header?.fifthSlide?.title }}
+      </h1>
+      <p class="fs-6" *ngIf="!skeletonStatus">
+        {{ header?.fifthSlide?.content }}
+      </p>
+      <button
+        class="btn-fifthSlide col-7 col-md-4 col-lg-3"
+        *ngIf="!skeletonStatus"
+      >
+        {{ header?.fifthSlide?.button }}
+      </button>
+    </div>
+  </section>
+
+  <section
+    class="container margin my-5"
+    id="sixthSection col-lg-12"
+    *ngIf="!miniLoader"
+  >
+    <div class="container col-lg-5">
+      <ngx-skeleton-loader
+        count="2"
+        animation="progress"
+        [theme]="{ width: '100%', height: '2vh' }"
+        *ngIf="skeletonStatus"
+      ></ngx-skeleton-loader>
+    </div>
+    <div class="d-flex flex-column align-items-center">
+      <h1 class="fs-3" *ngIf="!skeletonStatus">
+        {{ header?.sixthSlide?.title }}
+      </h1>
+      <p class="fs-6 text-center" *ngIf="!skeletonStatus">
+        {{ header?.sixthSlide?.content }}
+      </p>
+      <ngx-skeleton-loader
+        count="1"
+        appearance="circle"
+        [theme]="{ width: '12rem', height: '12rem' }"
+        *ngIf="mediaStatus['sixthSlideImage'] == null"
+      ></ngx-skeleton-loader>
+      <div *ngFor="let team of header?.sixthSlide?.team">
+        <div
+          class="passport-photo d-flex justify-content-center col-lg-12 col-md-12 col-12 d-flex cover-fill container"
+          *ngIf="!skeletonStatus"
+        >
+          <img
+            class="col-6 custom-shadow mx-3"
+            [src]="team?.img"
+            alt=""
+            [ngClass]="{
+              'display-hide': mediaStatus['sixthSlideImage'] == null
+            }"
+            (load)="onMediaLoad('sixthSlideImage')"
+          />
+        </div>
+        <h1 class="fw-bold fs-4 my-3 text-center" *ngIf="!skeletonStatus">
+          {{ team?.name }}
+        </h1>
+        <p class="col-12 text-center" *ngIf="!skeletonStatus">
+          {{ team?.designation }}<br /><a
+            [href]="team?.profileLink"
+            class="text-dark text-decoration-none"
+            *ngIf="!skeletonStatus"
+            >{{ header?.sixthSlide?.linkName }}
+            <svg
+              width="25px"
+              height="25px"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                <path
+                  d="M9.71069 18.2929C10.1012 18.6834 10.7344 18.6834 11.1249 18.2929L16.0123 13.4006C16.7927 12.6195 16.7924 11.3537 16.0117 10.5729L11.1213 5.68254C10.7308 5.29202 10.0976 5.29202 9.70708 5.68254C9.31655 6.07307 9.31655 6.70623 9.70708 7.09676L13.8927 11.2824C14.2833 11.6729 14.2833 12.3061 13.8927 12.6966L9.71069 16.8787C9.32016 17.2692 9.32016 17.9023 9.71069 18.2929Z"
+                  fill="#635f5f"
+                ></path>
+              </g>
+            </svg>
+          </a>
+        </p>
+        <p class="col-12 text-center" *ngIf="!skeletonStatus">
+          {{ team?.content }}
+        </p>
+        <ngx-skeleton-loader
+          count="1"
+          appearance="line"
+          [theme]="{ width: '50%', height: '2vh', }"
+          *ngIf="skeletonStatus"
+        ></ngx-skeleton-loader>
+      </div>
+    </div>
   </section>
 </main>
+
+<app-footer *ngIf="!miniLoader"></app-footer>

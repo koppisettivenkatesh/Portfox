@@ -1,1 +1,34 @@
-<p>footer works!</p>
+<footer class=" margin my-5 col-12 col-md-12 col-lg-12 text-white p-4 mb-0" id="seventhSection">
+  <div class="container">
+    <ngx-skeleton-loader count="3" appearance="line" [theme]="{ height: '1vh ',  'background-color': '#7C4DFF'
+  }" *ngIf="skeletonStatus"></ngx-skeleton-loader>
+    <div class="row-type-footer justify-content-between">
+      <div class="column-type-footer ">
+        <h1 class="fs-2"*ngIf="!skeletonStatus">{{footer.logo}}</h1>
+        <p class="fs-6 col-sm-8" *ngIf="!skeletonStatus">{{footer?.description}}</p>
+      </div>
+      <div class="row-type-links col-lg-2 col-7 col-md-5 justify-content-between justify-content-xl-between  ">
+        <div>
+          <h1 class="fs-6 fw-bold" *ngIf="!skeletonStatus">{{footer.socialMediaTitle}}</h1>
+          <div *ngFor="let seventhSlide of footer?.socialMedia ">
+            <a href="seventhSlide?.link" class="fs-6 text-white text-decoration-none" *ngIf="!skeletonStatus">{{seventhSlide?.media}}</a>
+          </div>
+        </div>
+        <div>
+          <h1 class="fs-6 fw-bold" *ngIf="!skeletonStatus">{{footer.serviceTitle}}</h1>
+          <div *ngFor="let seventhSlide of footer?.service ">
+            <a href="seventhSlide?.link" class="fs-6 text-white text-decoration-none" *ngIf="!skeletonStatus">{{seventhSlide?.service}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <ngx-skeleton-loader count="1" appearance="line" [theme]="{ height: '1vh ',  'background-color': '#7C4DFF' }" *ngIf="skeletonStatus"></ngx-skeleton-loader>
+    <div class="row-type-footer justify-content-end">
+      <p class="fs-6 mx-3 text-center" *ngIf="!skeletonStatus">{{footer?.rights}}</p>
+      <div class="row-type-footer" *ngFor="let seventhSlide of footer?.info ">
+        <a href="seventhSlide?.link" class="fs-6 text-white text-center text-decoration-none mx-3" *ngIf="!skeletonStatus">{{seventhSlide?.title}}</a>
+      </div>
+    </div>
+  </div>
+</footer>
